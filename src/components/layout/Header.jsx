@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import { Heart, ChevronDown, User, LayoutDashboard, LogOut, Shield } from 'lucide-react';
+import { Heart, ChevronDown, LayoutDashboard, LogOut, Shield } from 'lucide-react';
 
 export default function Header() {
   const { user, isAuthenticated, signOut } = useAuth();
@@ -10,7 +10,6 @@ export default function Header() {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -32,15 +31,15 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-4 z-50 w-full px-4 sm:px-8 max-w-7xl mx-auto transition-all duration-300">
-      <div className="glass-nav rounded-full px-4 sm:px-8 py-3 flex items-center justify-between shadow-lg">
-        {/* Brand Logo & Name */}
+    <header className="hidden lg:block sticky top-4 z-50 w-full px-8 max-w-7xl mx-auto transition-all duration-300">
+      <div className="glass-nav rounded-full px-8 py-3 flex items-center justify-between shadow-lg">
+        {/* Brand Logo & Title */}
         <Link to="/" className="flex items-center gap-3 group">
           <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#0097E2] to-[#0F2920] flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
             <Heart className="w-5 h-5 fill-current" />
           </div>
           <div className="flex flex-col">
-            <span className="font-bold text-base sm:text-lg tracking-tight text-[#0F2920]">
+            <span className="font-bold text-lg tracking-tight text-[#0F2920]">
               Bandhan Paribar
             </span>
             <span className="text-[10px] text-gray-500 font-medium tracking-wide uppercase">
@@ -50,7 +49,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-6 text-sm font-medium">
+        <nav className="flex items-center gap-6 text-sm font-medium">
           {navItems.map((item) => (
             <NavLink
               key={item.name}
@@ -70,7 +69,6 @@ export default function Header() {
 
         {/* Language Switcher & Auth Section */}
         <div className="flex items-center gap-3">
-          {/* Language Switcher Pill */}
           <div className="bg-[#EEF0F4] border border-[#DDDDEE] rounded-lg p-0.5 flex items-center shadow-inner">
             <button
               onClick={() => setLang('EN')}
@@ -94,9 +92,7 @@ export default function Header() {
             </button>
           </div>
 
-          {/* Conditional Auth Rendering */}
           {isAuthenticated ? (
-            /* User Profile Dropdown Icon when Signed In */
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -108,13 +104,12 @@ export default function Header() {
                   alt={user?.name || 'User Avatar'}
                   className="w-8 h-8 rounded-full border border-gray-300 object-cover bg-gray-100"
                 />
-                <span className="hidden sm:inline text-xs font-semibold text-gray-800 max-w-[100px] truncate">
+                <span className="text-xs font-semibold text-gray-800 max-w-[100px] truncate">
                   {user?.name || 'User'}
                 </span>
                 <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
               </button>
 
-              {/* Dropdown Menu */}
               {dropdownOpen && (
                 <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                   <div className="px-4 py-3 border-b border-gray-100">
@@ -132,7 +127,7 @@ export default function Header() {
                         setDropdownOpen(false);
                         navigate('/dashboard');
                       }}
-                      className="w-full px-4 py-2 text-xs font-medium text-gray-700 hover:bg-gray-50 flex items-center gap-2.5 transition-colors"
+                      className="w-full px-4 py-2 text-xs font-medium text-gray-700 hover:bg-gray-50 flex items-center gap-2.5 transition-colors text-left"
                     >
                       <LayoutDashboard className="w-4 h-4 text-[#0097E2]" />
                       <span>Dashboard</span>
@@ -146,7 +141,7 @@ export default function Header() {
                         setDropdownOpen(false);
                         navigate('/');
                       }}
-                      className="w-full px-4 py-2 text-xs font-medium text-rose-600 hover:bg-rose-50 flex items-center gap-2.5 transition-colors"
+                      className="w-full px-4 py-2 text-xs font-medium text-rose-600 hover:bg-rose-50 flex items-center gap-2.5 transition-colors text-left"
                     >
                       <LogOut className="w-4 h-4 text-rose-500" />
                       <span>Sign Out</span>
@@ -156,11 +151,10 @@ export default function Header() {
               )}
             </div>
           ) : (
-            /* Unauthenticated state buttons */
             <div className="flex items-center gap-2">
               <Link
                 to="/signin"
-                className="hidden sm:inline-flex px-4 py-2 text-xs font-medium text-[#0F2920] hover:text-[#0097E2] border border-gray-300 hover:border-[#0097E2] rounded-xl transition-all shadow-sm"
+                className="px-4 py-2 text-xs font-medium text-[#0F2920] hover:text-[#0097E2] border border-gray-300 hover:border-[#0097E2] rounded-xl transition-all shadow-sm"
               >
                 Sign in
               </Link>

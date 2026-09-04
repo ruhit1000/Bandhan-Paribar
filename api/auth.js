@@ -1,30 +1,28 @@
 import { betterAuth } from 'better-auth';
+import { mongodbAdapter } from '@better-auth/mongo-adapter';
 import { MongoClient } from 'mongodb';
 
-// MongoDB Atlas connection configuration using native MongoDB driver
-const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/dailylens';
-const client = new MongoClient(uri);
+const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/bandhan_paribar';
 
+let client;
 let db;
 
-export async function connectToDatabase() {
+function getDatabase() {
   if (!db) {
-    await client.connect();
-    db = client.db('dailylens');
+    client = new MongoClient(uri);
+    db = client.db();
   }
-  return { client, db };
+  return db;
 }
 
 export const auth = betterAuth({
-  database: {
-    db: db || (await connectToDatabase()).db,
-    type: 'mongodb',
-  },
+  secret: process.env.BETTER_AUTH_SECRET || 'piGlBJxLgjmLHRqzMWQFoWA3n8UAHaY7',
+  baseURL: process.env.BETTER_AUTH_URL || 'http://localhost:5173',
+  database: mongodbAdapter(getDatabase()),
   emailAndPassword: {
     enabled: true,
   },
   user: {
-    // Explicit Role-based Auth requirement: Standard sign ups default to 'user'
     additionalFields: {
       role: {
         type: 'string',

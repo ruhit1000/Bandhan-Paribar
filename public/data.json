@@ -23,13 +23,12 @@
       "title": "Relief distribution among flood victims in Greater Chittagong",
       "slug": "relief-distribution-chittagong",
       "category": "disaster",
-      "categoryName": "Disaster Relief",
+      "categoryName": "Disaster",
       "date": "July 22, 2026",
       "time": "10:30 AM",
       "isFeatured": true,
       "image": "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1200&auto=format&fit=crop",
-      "excerpt": "A severe flood hit Chittagong in the first week of this month. Extensive areas in Chittagong, Cox's Bazar, and Bandarban were devastated, leaving thousands in urgent need of aid.",
-      "content": "A severe flood hit Chittagong in the first week of this month. Extensive areas in Chittagong, Cox's Bazar, and Bandarban were submerged under water. Our emergency rapid response team was dispatched immediately with dry food packages, clean drinking water, and essential hygiene kits to assist over 10,000 affected families across remote villages."
+      "excerpt": "A severe flood hit Chittagong in the first week of this month. Extensive areas in Chittagong, Cox's Bazar, and Bandarban were submerged under water. Our emergency rapid response team was dispatched immediately with dry food packages, clean drinking water, and essential hygiene kits to assist over 10,000 affected families across remote villages."
     },
     {
       "id": 2,
@@ -41,8 +40,7 @@
       "time": "02:15 PM",
       "isFeatured": false,
       "image": "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?q=80&w=800&auto=format&fit=crop",
-      "excerpt": "The 3rd Imams' Training by the As-Sunnah Foundation has been successfully completed with the participation of selected Imams and community leaders nationwide.",
-      "content": "The 3rd Imams' Training program focused on modern community leadership, disaster management awareness, financial literacy, and social welfare advocacy. Over 150 Imams from various districts participated in this intensive 7-day residence workshop."
+      "excerpt": "The 3rd Imams' Training by the Bandhan Paribar foundation has been successfully completed with the participation of selected Imams and community leaders nationwide."
     },
     {
       "id": 3,
@@ -54,8 +52,7 @@
       "time": "05:00 PM",
       "isFeatured": false,
       "image": "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=800&auto=format&fit=crop",
-      "excerpt": "Breaking all past records to bring Eid smiles to the faces of the country's underprivileged and disaster-affected people, the social project reached 35+ districts.",
-      "content": "Our flagship Qurbani project successfully distributed fresh meat packages to over 85,000 underprivileged households during Eid-ul-Adha. Fresh meat was delivered directly to low-income families, orphanages, and disaster shelter camps."
+      "excerpt": "Breaking all past records to bring Eid smiles to the faces of the country's underprivileged and disaster-affected people, the social project reached 35+ districts."
     },
     {
       "id": 4,
@@ -67,8 +64,7 @@
       "time": "11:00 AM",
       "isFeatured": false,
       "image": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?q=80&w=800&auto=format&fit=crop",
-      "excerpt": "A free health camp was organized in Sylhet, providing essential medical checkups and free prescription medicine to over 500 underprivileged families.",
-      "content": "Volunteer physicians and healthcare professionals conducted diagnostic health checkups, diabetes screenings, eye exams, and distributed vital medicines free of charge to rural communities in Sylhet."
+      "excerpt": "A free health camp was organized in Sylhet, providing essential medical checkups and free prescription medicine to over 500 underprivileged families."
     },
     {
       "id": 5,
@@ -80,8 +76,7 @@
       "time": "09:30 AM",
       "isFeatured": false,
       "image": "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=800&auto=format&fit=crop",
-      "excerpt": "The workshop focused on skill development and leadership training, empowering young participants from rural areas to initiate social impact initiatives.",
-      "content": "Youth leadership and vocational IT skills were taught to 120 aspiring young men and women. Hands-on mentorship sessions guided participants on creating sustainable micro-enterprises."
+      "excerpt": "The workshop focused on skill development and leadership training, empowering young participants from rural areas to initiate social impact initiatives."
     },
     {
       "id": 6,
@@ -93,8 +88,7 @@
       "time": "08:00 AM",
       "isFeatured": false,
       "image": "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=800&auto=format&fit=crop",
-      "excerpt": "To combat climate vulnerability and coastal erosion, our volunteer network planted fruit-bearing and timber saplings across 12 coastal sub-districts.",
-      "content": "Local school students, community elders, and green activists joined hands to plant mangrove and shade saplings along embankments, protecting riverbanks and fostering environmental sustainability."
+      "excerpt": "To combat climate vulnerability and coastal erosion, our volunteer network planted fruit-bearing and timber saplings across 12 coastal sub-districts."
     },
     {
       "id": 7,
@@ -105,9 +99,8 @@
       "date": "June 18, 2026",
       "time": "04:30 PM",
       "isFeatured": false,
-      "image": "https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?q=80&w=800&auto=format&fit=crop",
-      "excerpt": "Installation of 80 deep tube-wells brings pure, safe drinking water to salinity-affected coastal villages in Satkhira and Khulna.",
-      "content": "Clean drinking water access has been restored to over 24,000 villagers where arsenic contamination and high salinity previously caused severe waterborne illnesses."
+      "image": "https://images.unsplash.com/photo-1538300342682-cf57afb97285?q=80&w=800&auto=format&fit=crop",
+      "excerpt": "Installation of 80 deep tube-wells brings pure, safe drinking water to salinity-affected coastal villages in Satkhira and Khulna."
     },
     {
       "id": 8,
@@ -119,8 +112,7 @@
       "time": "10:00 AM",
       "isFeatured": false,
       "image": "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?q=80&w=800&auto=format&fit=crop",
-      "excerpt": "High-density thermal blankets and warm winter clothing sets are being procured for cold-wave vulnerable northern districts.",
-      "content": "Preparations are underway to reach elderly citizens, day laborers, and children in northern hilly and flood-plain regions before the onset of extreme winter cold waves."
+      "excerpt": "High-density thermal blankets and warm winter clothing sets are being procured for cold-wave vulnerable northern districts."
     },
     {
       "id": 9,
@@ -132,8 +124,115 @@
       "time": "03:00 PM",
       "isFeatured": false,
       "image": "https://images.unsplash.com/photo-1615461066841-6116e61058f4?q=80&w=800&auto=format&fit=crop",
-      "excerpt": "Volunteers and university students gathered to donate blood for thalassemia patients and emergency surgical cases at Central Red Cross Center.",
-      "content": "A day-long blood donation drive successfully registered 450 donors and collected 300 blood bags that were supplied directly to major public hospitals."
+      "excerpt": "Volunteers and university students gathered to donate blood for thalassemia patients and emergency surgical cases at Central Red Cross Center."
+    },
+    {
+      "id": 10,
+      "title": "Women Entrepreneurship Micro-Grant Ceremony",
+      "slug": "women-entrepreneurship-micro-grant",
+      "category": "women",
+      "categoryName": "Women Empowerment",
+      "date": "April 28, 2026",
+      "time": "11:30 AM",
+      "isFeatured": false,
+      "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop",
+      "excerpt": "50 rural women received sewing machines and interest-free startup capital to establish independent tailoring businesses."
+    },
+    {
+      "id": 11,
+      "title": "Educational Kit Distribution to 5,000 Students",
+      "slug": "educational-kit-distribution",
+      "category": "education",
+      "categoryName": "Education & Student Support",
+      "date": "April 15, 2026",
+      "time": "10:00 AM",
+      "isFeatured": false,
+      "image": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800&auto=format&fit=crop",
+      "excerpt": "School bags, notebooks, uniforms, and stationary items distributed to underprivileged primary students across 15 schools."
+    },
+    {
+      "id": 12,
+      "title": "Wheelchair & Assistive Equipment Distribution",
+      "slug": "wheelchair-assistive-equipment",
+      "category": "disability",
+      "categoryName": "Disability Support",
+      "date": "March 22, 2026",
+      "time": "02:00 PM",
+      "isFeatured": false,
+      "image": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?q=80&w=800&auto=format&fit=crop",
+      "excerpt": "Customized wheelchairs and hearing aids delivered to 100 physically challenged individuals to support mobility and independence."
+    },
+    {
+      "id": 13,
+      "title": "Anti-Drug Awareness Campaign in Colleges",
+      "slug": "anti-drug-awareness-campaign",
+      "category": "anti-drug",
+      "categoryName": "Anti-Drug Awareness",
+      "date": "March 10, 2026",
+      "time": "09:00 AM",
+      "isFeatured": false,
+      "image": "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=800&auto=format&fit=crop",
+      "excerpt": "Seminars and interactive theater performances organized to educate youth about the dangers of drug addiction and mental wellness."
+    },
+    {
+      "id": 14,
+      "title": "Iftar Package Distribution for Ramadan 2026",
+      "slug": "iftar-package-distribution-ramadan",
+      "category": "iftar",
+      "categoryName": "Iftar Distribution",
+      "date": "February 25, 2026",
+      "time": "04:00 PM",
+      "isFeatured": false,
+      "image": "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=800&auto=format&fit=crop",
+      "excerpt": "Month-long dry food packages and fresh warm Iftar meals served to over 40,000 fasting day-laborers and street children."
+    },
+    {
+      "id": 15,
+      "title": "Emergency Food Relief in Char Land Regions",
+      "slug": "emergency-food-relief-char-land",
+      "category": "food",
+      "categoryName": "Food Distribution",
+      "date": "February 12, 2026",
+      "time": "01:00 PM",
+      "isFeatured": false,
+      "image": "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=800&auto=format&fit=crop",
+      "excerpt": "Boats deployed to deliver essential food packs containing rice, lentils, oil, and salt to isolated char island communities."
+    },
+    {
+      "id": 16,
+      "title": "Winter Clothing Drive Reaches Coldest Districts",
+      "slug": "winter-clothing-drive-coldest-districts",
+      "category": "winter-clothing",
+      "categoryName": "Winter Clothing Distribution",
+      "date": "January 20, 2026",
+      "time": "08:30 AM",
+      "isFeatured": false,
+      "image": "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?q=80&w=800&auto=format&fit=crop",
+      "excerpt": "Warm jackets, sweaters, and woolen caps distributed to 8,000 children and elderly citizens in Panchagarh and Kurigram."
+    },
+    {
+      "id": 17,
+      "title": "Orphanage Facility Renovation Completed",
+      "slug": "orphanage-facility-renovation",
+      "category": "community",
+      "categoryName": "Community Development",
+      "date": "January 05, 2026",
+      "time": "03:30 PM",
+      "isFeatured": false,
+      "image": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800&auto=format&fit=crop",
+      "excerpt": "Upgraded living dormitories, solar lighting systems, and study rooms inaugurated for 120 resident orphan children."
+    },
+    {
+      "id": 18,
+      "title": "Vocational IT Skills Training Batch 5 Graduation",
+      "slug": "vocational-it-skills-training-batch-5",
+      "category": "skills",
+      "categoryName": "Skills Development Training",
+      "date": "December 22, 2025",
+      "time": "11:00 AM",
+      "isFeatured": false,
+      "image": "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=800&auto=format&fit=crop",
+      "excerpt": "85 underprivileged youths completed a 3-month course in web development, graphic design, and freelance skills."
     }
   ],
   "impactStats": [
@@ -209,7 +308,7 @@
   "testimonials": [
     {
       "id": 1,
-      "quote": "When the severe flood submerged our entire village, As-Sunnah Foundation's rescue team reached us with dry food and clean water within 24 hours. They gave us hope when we lost everything.",
+      "quote": "When the severe flood submerged our entire village, Bandhan Paribar's rescue team reached us with dry food and clean water within 24 hours. They gave us hope when we lost everything.",
       "name": "Abdul Karim",
       "role": "Flood Victim, Chittagong",
       "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop"

@@ -34,12 +34,11 @@ export default function App() {
     <AuthProvider>
       <Router>
         <div className="min-h-screen flex flex-col justify-between bg-[#F4F5F7]">
-          {/* Header & Mobile Nav */}
           <div>
             <Header />
             <MobileNav />
-            {/* Main Content Viewport */}
-            <main className="pt-4 pb-20 lg:pb-0">
+            {/* Main content padding accounts for fixed mobile top bar (pt-16) and bottom nav (pb-24) */}
+            <main className="pt-16 lg:pt-4 pb-24 lg:pb-0">
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<AboutUs />} />
@@ -54,7 +53,6 @@ export default function App() {
               </Routes>
             </main>
           </div>
-          {/* Footer */}
           <Footer />
         </div>
       </Router>

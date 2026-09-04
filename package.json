@@ -1,5 +1,5 @@
 {
-  "name": "the-dailylens",
+  "name": "bandhan-paribar",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@better-auth/mongo-adapter": "^1.7.2",
     "@heroui/react": "^3.2.4",
     "@tailwindcss/vite": "^4.3.3",
     "better-auth": "^1.7.2",

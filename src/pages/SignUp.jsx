@@ -45,7 +45,7 @@ export default function SignUp() {
         email: formData.email,
         password: formData.password,
       });
-      setSuccess('Account created successfully with role: "user"! Redirecting...');
+      setSuccess('Account created successfully! Redirecting...');
       setTimeout(() => {
         navigate('/');
       }, 1200);
@@ -152,12 +152,6 @@ export default function SignUp() {
                 className="w-full pl-10 pr-4 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0097E2]/20 focus:border-[#0097E2] transition-all"
               />
             </div>
-          </div>
-
-          {/* Role indication note */}
-          <div className="p-3 bg-blue-50/60 border border-blue-100 rounded-xl flex items-center gap-2 text-xs text-[#0097E2]">
-            <Shield className="w-4 h-4 shrink-0" />
-            <span>Default role assigned: <strong>User</strong></span>
           </div>
 
           <button
