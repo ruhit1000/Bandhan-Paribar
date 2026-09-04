@@ -9,6 +9,7 @@ export default function EmptyPage({
   icon: Icon = Sparkles,
   actionText = 'Return to Home',
   actionPath = '/',
+  onAction,
 }) {
   return (
     <div className="min-h-[70vh] flex items-center justify-center px-4 py-16">
@@ -29,13 +30,23 @@ export default function EmptyPage({
         </p>
 
         <div className="pt-2">
-          <Link
-            to={actionPath}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[#0097E2] hover:bg-[#0081C4] text-white font-semibold rounded-2xl text-xs shadow-md hover:shadow-lg transition-all"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>{actionText}</span>
-          </Link>
+          {onAction ? (
+            <button
+              onClick={onAction}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#0097E2] hover:bg-[#0081C4] text-white font-semibold rounded-2xl text-xs shadow-md hover:shadow-lg transition-all"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span>{actionText}</span>
+            </button>
+          ) : (
+            <Link
+              to={actionPath}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#0097E2] hover:bg-[#0081C4] text-white font-semibold rounded-2xl text-xs shadow-md hover:shadow-lg transition-all"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span>{actionText}</span>
+            </Link>
+          )}
         </div>
       </div>
     </div>
