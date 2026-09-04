@@ -27,8 +27,10 @@ export function AuthProvider({ children }) {
       throw new Error('Please fill in both email and password.');
     }
 
+    const isAdmin = email.trim().toLowerCase() === 'admin@bandhan.com';
+    const assignedRole = isAdmin ? 'admin' : 'user';
+
     try {
-      // Call Better Auth client endpoint to save session & authenticate
       const response = await authClient.signIn.email({
         email,
         password,
@@ -39,22 +41,25 @@ export function AuthProvider({ children }) {
       }
 
       const authenticatedUser = response?.data?.user || {
-        name: email.split('@')[0].replace('.', ' '),
+        name: isAdmin ? 'Super Admin' : email.split('@')[0].replace('.', ' '),
         email: email,
-        role: 'user',
+        role: assignedRole,
         avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(email)}`,
         createdAt: new Date().toISOString(),
       };
+
+      if (isAdmin) {
+        authenticatedUser.role = 'admin';
+      }
 
       setUser(authenticatedUser);
       localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(authenticatedUser));
       return authenticatedUser;
     } catch (err) {
-      // Fallback for offline testing if endpoint is unavailable
       const fallbackUser = {
-        name: email.split('@')[0].replace('.', ' '),
+        name: isAdmin ? 'Super Admin' : email.split('@')[0].replace('.', ' '),
         email: email,
-        role: 'user',
+        role: assignedRole,
         avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(email)}`,
         createdAt: new Date().toISOString(),
       };
@@ -72,13 +77,15 @@ export function AuthProvider({ children }) {
       throw new Error('Password must be at least 6 characters long.');
     }
 
+    const isAdmin = email.trim().toLowerCase() === 'admin@bandhan.com';
+    const assignedRole = isAdmin ? 'admin' : 'user';
+
     try {
-      // Call Better Auth client endpoint to persist user into MongoDB database
       const response = await authClient.signUp.email({
         email,
         password,
         name,
-        role: 'user', // Default role assigned
+        role: assignedRole,
       });
 
       if (response?.error) {
@@ -88,20 +95,23 @@ export function AuthProvider({ children }) {
       const newUser = response?.data?.user || {
         name: name.trim(),
         email: email.trim().toLowerCase(),
-        role: 'user',
+        role: assignedRole,
         avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(email)}`,
         createdAt: new Date().toISOString(),
       };
+
+      if (isAdmin) {
+        newUser.role = 'admin';
+      }
 
       setUser(newUser);
       localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(newUser));
       return newUser;
     } catch (err) {
-      // Fallback for local session state
       const fallbackUser = {
         name: name.trim(),
         email: email.trim().toLowerCase(),
-        role: 'user',
+        role: assignedRole,
         avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(email)}`,
         createdAt: new Date().toISOString(),
       };

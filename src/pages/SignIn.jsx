@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import { Mail, Lock, LogIn, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Mail, Lock, LogIn, AlertCircle, CheckCircle2, Shield } from 'lucide-react';
 
 export default function SignIn() {
   const { signIn } = useAuth();
@@ -25,12 +25,32 @@ export default function SignIn() {
     setLoading(true);
     try {
       await signIn(formData.email, formData.password);
-      setSuccess('Signed in successfully! Redirecting to home...');
+      setSuccess('Signed in successfully! Redirecting...');
       setTimeout(() => {
-        navigate('/');
-      }, 1000);
+        navigate('/dashboard');
+      }, 800);
     } catch (err) {
       setError(err.message || 'Failed to sign in. Please check your credentials.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Temporary quick login helper for Admin user testing
+  const handleAdminLogin = async () => {
+    setError('');
+    setSuccess('');
+    setFormData({ email: 'admin@bandhan.com', password: 'admin123' });
+    setLoading(true);
+
+    try {
+      await signIn('admin@bandhan.com', 'admin123');
+      setSuccess('Signed in as Admin! Redirecting to Admin Dashboard...');
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 800);
+    } catch (err) {
+      setError(err.message || 'Failed to sign in as Admin.');
     } finally {
       setLoading(false);
     }
@@ -47,6 +67,23 @@ export default function SignIn() {
           <p className="text-xs text-gray-500">
             Sign in to access your Bandhan Paribar profile
           </p>
+        </div>
+
+        {/* Temporary Quick Admin Login Button */}
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-3.5 text-center space-y-2">
+          <p className="text-xs font-semibold text-amber-900 flex items-center justify-center gap-1.5">
+            <Shield className="w-4 h-4 text-amber-600" />
+            <span>Admin Demo Quick Access</span>
+          </p>
+          <button
+            type="button"
+            onClick={handleAdminLogin}
+            disabled={loading}
+            className="w-full py-2 bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-xl text-xs shadow-sm transition-all flex items-center justify-center gap-1.5"
+          >
+            <Shield className="w-3.5 h-3.5" />
+            <span>Log in as Admin</span>
+          </button>
         </div>
 
         {/* Error Alert */}

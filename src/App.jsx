@@ -15,19 +15,7 @@ import Gallery from './pages/Gallery';
 import Partnership from './pages/Partnership';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
-import EmptyPage from './components/common/EmptyPage';
-import { LayoutDashboard } from 'lucide-react';
-
-function DashboardPlaceholder() {
-  return (
-    <EmptyPage
-      title="Admin & User Dashboard"
-      subtitle="Coming Soon"
-      message="The user dashboard analytics and content management panel will be built in the next phase. Your current role is recognized as User."
-      icon={LayoutDashboard}
-    />
-  );
-}
+import Dashboard from './pages/Dashboard';
 
 export default function App() {
   return (
@@ -37,7 +25,6 @@ export default function App() {
           <div>
             <Header />
             <MobileNav />
-            {/* Main content padding accounts for fixed mobile top bar (pt-16) and bottom nav (pb-24) */}
             <main className="pt-16 lg:pt-4 pb-24 lg:pb-0">
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -49,7 +36,7 @@ export default function App() {
                 <Route path="/partnership" element={<Partnership />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
-                <Route path="/dashboard" element={<DashboardPlaceholder />} />
+                <Route path="/dashboard" element={<Dashboard />} />
               </Routes>
             </main>
           </div>
