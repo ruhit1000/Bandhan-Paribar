@@ -191,7 +191,7 @@ export default function Home() {
                     </p>
                   </div>
                   <Link
-                    to="/news"
+                    to={`/news/${article.id}`}
                     className="inline-flex items-center gap-1 text-xs font-semibold text-[#0097E2] hover:underline"
                   >
                     <span>Read Full Story</span>

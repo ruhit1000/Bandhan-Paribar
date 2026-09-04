@@ -9,6 +9,7 @@ import Footer from './components/layout/Footer';
 import Home from './pages/Home';
 import AboutUs from './pages/AboutUs';
 import News from './pages/News';
+import ArticleDetails from './pages/ArticleDetails';
 import Donate from './pages/Donate';
 import Events from './pages/Events';
 import Gallery from './pages/Gallery';
@@ -30,6 +31,7 @@ export default function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<AboutUs />} />
                 <Route path="/news" element={<News />} />
+                <Route path="/news/:id" element={<ArticleDetails />} />
                 <Route path="/donate" element={<Donate />} />
                 <Route path="/events" element={<Events />} />
                 <Route path="/gallery" element={<Gallery />} />

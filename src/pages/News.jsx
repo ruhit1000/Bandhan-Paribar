@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useFetch } from '../hooks/useFetch';
 import { useDebounce } from '../hooks/useDebounce';
-import { Search, ChevronLeft, ChevronRight, AlertCircle, Tag } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight, AlertCircle, Tag, ArrowRight } from 'lucide-react';
 
 export default function News() {
   const [searchInput, setSearchInput] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Requirement: 9 cards per page matching Figma design
   const itemsPerPage = 9;
-
-  // Debounced search hook (300ms delay)
   const debouncedSearch = useDebounce(searchInput, 300);
 
   const { data, loading, error } = useFetch('/data.json', {
@@ -78,7 +76,7 @@ export default function News() {
           </div>
         </div>
 
-        {/* Featured Hero Article (Shown on main page 1 view) */}
+        {/* Featured Hero Article */}
         {featuredArticle && !debouncedSearch && selectedCategory === 'all' && currentPage === 1 && (
           <div className="space-y-3">
             <h2 className="text-xl sm:text-2xl font-normal text-[#0F2920]">
@@ -94,16 +92,28 @@ export default function News() {
               </div>
               <div className="p-6 sm:p-8 flex flex-col justify-between space-y-4">
                 <div className="space-y-3">
-                  <h3 className="text-xl sm:text-2xl font-normal text-[#0F2920] leading-snug">
+                  <Link
+                    to={`/news/${featuredArticle.id}`}
+                    className="text-xl sm:text-2xl font-normal text-[#0F2920] hover:text-[#0097E2] transition-colors leading-snug block"
+                  >
                     {featuredArticle.title}
-                  </h3>
+                  </Link>
                   <p className="text-sm sm:text-base text-[#333333] leading-relaxed">
                     {featuredArticle.excerpt}
                   </p>
                 </div>
-                <p className="text-sm text-[#333333] font-normal pt-2">
-                  {featuredArticle.date}
-                </p>
+                <div className="flex items-center justify-between pt-2">
+                  <p className="text-sm text-[#333333] font-normal">
+                    {featuredArticle.date}
+                  </p>
+                  <Link
+                    to={`/news/${featuredArticle.id}`}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#0097E2] hover:bg-[#0081C4] text-white font-semibold rounded-xl text-xs shadow-xs transition-all"
+                  >
+                    <span>View Details</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -111,7 +121,7 @@ export default function News() {
 
         {/* Main Section: Sidebar Category Filter + 9 Card Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 pt-2">
-          {/* Figma Sidebar Category Card */}
+          {/* Sidebar Categories */}
           <aside className="lg:col-span-1">
             <div className="bg-white rounded-xl py-4 border border-gray-100 shadow-md space-y-2">
               <div className="px-6 pb-2 border-b border-gray-100">
@@ -139,10 +149,9 @@ export default function News() {
             </div>
           </aside>
 
-          {/* Figma Articles Grid & Pagination */}
+          {/* Articles Grid (9 cards per page) */}
           <main className="lg:col-span-3 space-y-8">
             {loading ? (
-              /* Loading Skeleton */
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {Array.from({ length: 9 }).map((_, n) => (
                   <div
@@ -156,14 +165,12 @@ export default function News() {
                 ))}
               </div>
             ) : error ? (
-              /* Error State */
               <div className="bg-rose-50 border border-rose-200 rounded-2xl p-8 text-center space-y-2">
                 <AlertCircle className="w-8 h-8 text-rose-500 mx-auto" />
                 <h3 className="font-semibold text-rose-900 text-sm">Error Loading Articles</h3>
                 <p className="text-xs text-rose-700">{error}</p>
               </div>
             ) : articles.length === 0 ? (
-              /* Empty Search / Filter State */
               <div className="bg-white rounded-2xl p-12 text-center border border-gray-100 space-y-3">
                 <Tag className="w-10 h-10 text-gray-300 mx-auto" />
                 <h3 className="font-semibold text-gray-800 text-base">No Articles Found</h3>
@@ -181,7 +188,6 @@ export default function News() {
                 </button>
               </div>
             ) : (
-              /* Articles Grid (3x3 = 9 cards per page on desktop) */
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {articles.map((art) => (
                   <div
@@ -189,31 +195,41 @@ export default function News() {
                     className="bg-white rounded-[20px] overflow-hidden border border-[#919EAB]/20 shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
                   >
                     <div>
-                      <div className="h-52 overflow-hidden bg-gray-100 rounded-t-[20px]">
+                      <Link to={`/news/${art.id}`} className="block h-52 overflow-hidden bg-gray-100 rounded-t-[20px]">
                         <img
                           src={art.image}
                           alt={art.title}
                           className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                         />
-                      </div>
+                      </Link>
                       <div className="p-5 space-y-3">
-                        <h4 className="font-normal text-[#0F2920] text-lg sm:text-xl leading-snug line-clamp-2">
+                        <Link
+                          to={`/news/${art.id}`}
+                          className="font-normal text-[#0F2920] text-lg sm:text-xl leading-snug line-clamp-2 hover:text-[#0097E2] transition-colors block"
+                        >
                           {art.title}
-                        </h4>
+                        </Link>
                         <p className="text-sm text-[#333333] line-clamp-3 leading-relaxed">
                           {art.excerpt}
                         </p>
                       </div>
                     </div>
-                    <div className="p-5 pt-0">
+                    <div className="p-5 pt-0 flex items-center justify-between">
                       <p className="text-sm text-[#333333] font-normal">{art.date}</p>
+                      <Link
+                        to={`/news/${art.id}`}
+                        className="text-xs font-semibold text-[#0097E2] hover:underline inline-flex items-center gap-1"
+                      >
+                        <span>View Details</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
                     </div>
                   </div>
                 ))}
               </div>
             )}
 
-            {/* Figma Numbered Pagination Controls */}
+            {/* Pagination Controls */}
             {!loading && totalPages > 1 && (
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6">
                 <span className="text-xs text-gray-500 font-medium">
