@@ -1,6 +1,5 @@
-import React from 'react';
 import { useFetch } from '../hooks/useFetch';
-import { Shield, Target, Compass, Heart, Users, Award, CheckCircle2 } from 'lucide-react';
+import { Target, Compass } from 'lucide-react';
 
 export default function AboutUs() {
   const { data } = useFetch('/data.json');
