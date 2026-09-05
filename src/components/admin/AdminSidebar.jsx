@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
 import {
   LayoutDashboard,
   Users,
@@ -14,7 +13,6 @@ import {
 } from 'lucide-react';
 
 export default function AdminSidebar({ activeTab, setActiveTab }) {
-  const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const [isOpenMobile, setIsOpenMobile] = useState(false);
 
@@ -123,23 +121,22 @@ export default function AdminSidebar({ activeTab, setActiveTab }) {
             </div>
             <div className="max-w-[130px] truncate">
               <p className="text-xs font-bold text-gray-900 truncate">
-                {user?.name || 'Super Admin'}
+                Super Admin
               </p>
               <p className="text-[10px] text-gray-400 truncate">
-                {user?.email || 'admin@bandhan.com'}
+                admin@bandhan.com
               </p>
             </div>
           </div>
 
           <button
             onClick={() => {
-              signOut();
               navigate('/');
             }}
             className="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 rounded-xl transition-colors"
           >
             <LogOut className="w-4 h-4 text-rose-500" />
-            <span>Log Out</span>
+            <span>Exit Admin</span>
           </button>
         </div>
       </aside>

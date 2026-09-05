@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, Heart, ShieldAlert, Calendar, Newspaper, Menu, X, User } from 'lucide-react';
-import { useAuth } from '../../hooks/useAuth';
+import { Home, Heart, ShieldAlert, Calendar, Newspaper, Menu, X, LayoutDashboard } from 'lucide-react';
 
 export default function MobileNav() {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { user, isAuthenticated, signOut } = useAuth();
 
   const mobileNavItems = [
     { name: 'Home', path: '/', icon: Home },
-    { name: 'Donate', path: '/donate', icon: Heart },
-    { name: 'Events', path: '/events', icon: Calendar },
     { name: 'Articles', path: '/news', icon: Newspaper },
-    { name: 'About Us', path: '/about', icon: ShieldAlert },
+    { name: 'Donate', path: '/donate', icon: Heart },
+    { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
   ];
 
   return (
@@ -40,23 +37,15 @@ export default function MobileNav() {
           <div className="bg-white rounded-t-3xl p-6 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b pb-4">
               <div className="flex items-center gap-3">
-                {isAuthenticated ? (
-                  <img
-                    src={user?.avatar}
-                    alt={user?.name}
-                    className="w-10 h-10 rounded-full border border-[#0097E2]"
-                  />
-                ) : (
-                  <div className="w-10 h-10 rounded-full bg-blue-50 text-[#0097E2] flex items-center justify-center">
-                    <User className="w-5 h-5" />
-                  </div>
-                )}
+                <div className="w-10 h-10 rounded-full bg-blue-50 text-[#0097E2] flex items-center justify-center">
+                  <Heart className="w-5 h-5" />
+                </div>
                 <div className="max-w-[180px] truncate">
                   <h4 className="font-semibold text-gray-900 text-sm truncate">
-                    {isAuthenticated ? user?.name : 'Welcome Guest'}
+                    Bandhan Paribar
                   </h4>
                   <p className="text-xs text-gray-500 truncate">
-                    {isAuthenticated ? user?.email : 'Sign in to access features'}
+                    Social Welfare Foundation
                   </p>
                 </div>
               </div>
@@ -84,11 +73,11 @@ export default function MobileNav() {
                 News & Articles
               </NavLink>
               <NavLink
-                to="/about"
+                to="/dashboard"
                 onClick={() => setDrawerOpen(false)}
                 className="p-3 bg-gray-50 rounded-xl text-xs font-semibold text-gray-800 hover:bg-blue-50 hover:text-[#0097E2]"
               >
-                About Us
+                Dashboard
               </NavLink>
               <NavLink
                 to="/donate"
@@ -98,66 +87,30 @@ export default function MobileNav() {
                 Donate
               </NavLink>
               <NavLink
+                to="/about"
+                onClick={() => setDrawerOpen(false)}
+                className="p-3 bg-gray-50 rounded-xl text-xs font-semibold text-gray-800 hover:bg-blue-50 hover:text-[#0097E2]"
+              >
+                About Us
+              </NavLink>
+              <NavLink
                 to="/events"
                 onClick={() => setDrawerOpen(false)}
                 className="p-3 bg-gray-50 rounded-xl text-xs font-semibold text-gray-800 hover:bg-blue-50 hover:text-[#0097E2]"
               >
                 Events
               </NavLink>
-              <NavLink
-                to="/gallery"
-                onClick={() => setDrawerOpen(false)}
-                className="p-3 bg-gray-50 rounded-xl text-xs font-semibold text-gray-800 hover:bg-blue-50 hover:text-[#0097E2]"
-              >
-                Gallery
-              </NavLink>
-              <NavLink
-                to="/partnership"
-                onClick={() => setDrawerOpen(false)}
-                className="p-3 bg-gray-50 rounded-xl text-xs font-semibold text-gray-800 hover:bg-blue-50 hover:text-[#0097E2]"
-              >
-                Partnership
-              </NavLink>
             </nav>
 
             <div className="pt-4 border-t border-gray-100 flex flex-col gap-2">
-              {isAuthenticated ? (
-                <>
-                  <NavLink
-                    to="/dashboard"
-                    onClick={() => setDrawerOpen(false)}
-                    className="w-full text-center py-2.5 bg-[#0097E2] text-white rounded-xl text-xs font-semibold shadow-md"
-                  >
-                    Go to Dashboard
-                  </NavLink>
-                  <button
-                    onClick={() => {
-                      signOut();
-                      setDrawerOpen(false);
-                    }}
-                    className="w-full text-center py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 rounded-xl"
-                  >
-                    Log Out
-                  </button>
-                </>
-              ) : (
-                <div className="grid grid-cols-2 gap-3">
-                  <NavLink
-                    to="/signin"
-                    onClick={() => setDrawerOpen(false)}
-                    className="text-center py-2.5 border border-gray-300 rounded-xl text-xs font-semibold text-gray-800"
-                  >
-                    Sign In
-                  </NavLink>
-                  <NavLink
-                    to="/signup"
-                    onClick={() => setDrawerOpen(false)}
-                    className="text-center py-2.5 bg-[#0097E2] text-white rounded-xl text-xs font-semibold"
-                  >
-                    Sign Up
-                  </NavLink>
-                </div>
-              )}
+              <NavLink
+                to="/dashboard"
+                onClick={() => setDrawerOpen(false)}
+                className="text-center py-3 bg-[#0097E2] text-white rounded-xl text-xs font-bold shadow-md flex items-center justify-center gap-2"
+              >
+                <LayoutDashboard className="w-4 h-4" />
+                <span>Go to Management Dashboard</span>
+              </NavLink>
             </div>
           </div>
         </div>
