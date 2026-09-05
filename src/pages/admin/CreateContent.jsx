@@ -1,20 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ImageUploadModal from '../../components/admin/ImageUploadModal';
+import TipTapEditor from '../../components/admin/TipTapEditor';
+import { createArticle, updateArticle } from '../../services/articleService';
 import {
   ChevronRight,
-  Bold,
-  Italic,
-  Underline,
-  Type,
-  ListChecks,
-  AlignLeft,
-  Unlink,
   Image as ImageIcon,
   Trash2,
   CheckCircle2
 } from 'lucide-react';
 
-export default function CreateContent({ onCancel, onCreateSuccess }) {
+export default function CreateContent({ onCancel, onCreateSuccess, editArticle = null }) {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [tags, setTags] = useState('');
@@ -23,6 +18,21 @@ export default function CreateContent({ onCancel, onCreateSuccess }) {
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const isEditMode = Boolean(editArticle && editArticle.id);
+
+  useEffect(() => {
+    if (editArticle) {
+      setTitle(editArticle.title || '');
+      setBody(editArticle.content || editArticle.excerpt || '');
+      setTags(editArticle.tags || '');
+      setCoverImage(
+        editArticle.image ||
+          'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=800&auto=format&fit=crop'
+      );
+    }
+  }, [editArticle]);
 
   const handleTitleChange = (e) => {
     if (e.target.value.length <= 64) {
@@ -30,29 +40,44 @@ export default function CreateContent({ onCancel, onCreateSuccess }) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!title.trim()) {
       alert('Please enter a content title.');
       return;
     }
 
-    const newArticle = {
-      id: Date.now(),
-      title: title.trim(),
-      excerpt: body.slice(0, 150) || 'New article update published via admin dashboard.',
-      content: body,
-      category: 'community',
-      categoryName: 'Community Development',
-      date: new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }),
-      time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
-      image: coverImage,
-    };
+    setIsSubmitting(true);
 
-    setSuccessMsg('Content created successfully!');
-    setTimeout(() => {
-      if (onCreateSuccess) onCreateSuccess(newArticle);
-    }, 800);
+    try {
+      let result;
+      if (isEditMode) {
+        result = await updateArticle(editArticle.id, {
+          title,
+          content: body,
+          tags,
+          image: coverImage
+        });
+        setSuccessMsg('Content updated successfully!');
+      } else {
+        result = await createArticle({
+          title,
+          content: body,
+          tags,
+          image: coverImage
+        });
+        setSuccessMsg('Content created successfully!');
+      }
+
+      setTimeout(() => {
+        if (onCreateSuccess) onCreateSuccess(result);
+      }, 700);
+    } catch (err) {
+      console.error('Error saving article:', err);
+      alert('Failed to save article. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -63,16 +88,20 @@ export default function CreateContent({ onCancel, onCreateSuccess }) {
         <ChevronRight className="w-3 h-3 text-gray-400" />
         <span>Content Management</span>
         <ChevronRight className="w-3 h-3 text-gray-400" />
-        <span className="text-gray-900 font-bold">Create New Content</span>
+        <span className="text-gray-900 font-bold">
+          {isEditMode ? 'Edit Content' : 'Create New Content'}
+        </span>
       </div>
 
       <div className="flex items-center justify-between border-b pb-4">
-        <h1 className="text-2xl font-bold text-[#0F2920]">Create New Blog & News</h1>
+        <h1 className="text-2xl font-bold text-[#0F2920]">
+          {isEditMode ? 'Edit Blog & News Content' : 'Create New Blog & News'}
+        </h1>
       </div>
 
       {successMsg && (
-        <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl text-xs font-semibold flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+        <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl text-xs font-semibold flex items-center gap-2 animate-in fade-in duration-200">
+          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
           <span>{successMsg}</span>
         </div>
       )}
@@ -94,40 +123,13 @@ export default function CreateContent({ onCancel, onCreateSuccess }) {
           />
         </div>
 
-        {/* Formatting Toolbar Toolbar matching Figma */}
-        <div className="flex flex-wrap items-center gap-2 p-2 bg-[#F4F5F7] rounded-xl border border-gray-200">
-          <button type="button" className="p-2 rounded-lg bg-white shadow-xs text-gray-700 font-bold hover:bg-gray-100">
-            <Bold className="w-4 h-4" />
-          </button>
-          <button type="button" className="p-2 rounded-lg bg-white shadow-xs text-gray-700 italic hover:bg-gray-100">
-            <Italic className="w-4 h-4" />
-          </button>
-          <button type="button" className="p-2 rounded-lg bg-white shadow-xs text-gray-700 underline hover:bg-gray-100">
-            <Underline className="w-4 h-4" />
-          </button>
-          <button type="button" className="p-2 rounded-lg bg-white shadow-xs text-gray-700 hover:bg-gray-100">
-            <Type className="w-4 h-4" />
-          </button>
-          <button type="button" className="p-2 rounded-lg bg-white shadow-xs text-gray-700 hover:bg-gray-100">
-            <ListChecks className="w-4 h-4" />
-          </button>
-          <button type="button" className="p-2 rounded-lg bg-white shadow-xs text-gray-700 hover:bg-gray-100">
-            <AlignLeft className="w-4 h-4" />
-          </button>
-          <button type="button" className="p-2 rounded-lg bg-white shadow-xs text-gray-700 hover:bg-gray-100">
-            <Unlink className="w-4 h-4" />
-          </button>
-        </div>
-
-        {/* Content Body Textarea */}
+        {/* Content Body Editor powered by TipTap */}
         <div className="space-y-2">
           <label className="text-sm font-semibold text-gray-900">Content Body</label>
-          <textarea
-            rows={8}
+          <TipTapEditor
+            content={body}
+            onChange={(html) => setBody(html)}
             placeholder="Type something...."
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-            className="w-full p-4 bg-[#F4F5F7] border border-gray-200 rounded-xl text-sm font-normal text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#0097E2]/30 focus:border-[#0097E2] transition-all"
           />
         </div>
 
@@ -179,9 +181,14 @@ export default function CreateContent({ onCancel, onCreateSuccess }) {
           </button>
           <button
             type="submit"
-            className="px-6 py-2.5 bg-[#0097E2] hover:bg-[#0081C4] text-white font-semibold rounded-xl text-xs shadow-md transition-all"
+            disabled={isSubmitting}
+            className="px-6 py-2.5 bg-[#0097E2] hover:bg-[#0081C4] text-white font-semibold rounded-xl text-xs shadow-md disabled:opacity-50 transition-all"
           >
-            Create Content
+            {isSubmitting
+              ? 'Saving...'
+              : isEditMode
+              ? 'Update Content'
+              : 'Create Content'}
           </button>
         </div>
       </form>

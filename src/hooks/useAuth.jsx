@@ -24,27 +24,32 @@ export function AuthProvider({ children }) {
 
   const signIn = async (email, password) => {
     if (!email || !password) {
-      throw new Error('Please fill in both email and password.');
+      throw new Error('Please enter both your email address and password.');
     }
 
-    const isAdmin = email.trim().toLowerCase() === 'admin@bandhan.com';
-    const assignedRole = isAdmin ? 'admin' : 'user';
+    const cleanEmail = email.trim().toLowerCase();
+    const isAdmin = cleanEmail === 'admin@bandhan.com';
+
+    // Strict credential check for Admin demo account
+    if (isAdmin && password !== 'admin123') {
+      throw new Error('Invalid email or password.');
+    }
 
     try {
       const response = await authClient.signIn.email({
-        email,
+        email: cleanEmail,
         password,
       });
 
       if (response?.error) {
-        throw new Error(response.error.message || 'Authentication failed.');
+        throw new Error(response.error.message || 'Invalid email or password.');
       }
 
       const authenticatedUser = response?.data?.user || {
-        name: isAdmin ? 'Super Admin' : email.split('@')[0].replace('.', ' '),
-        email: email,
-        role: assignedRole,
-        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(email)}`,
+        name: isAdmin ? 'Super Admin' : cleanEmail.split('@')[0].replace('.', ' '),
+        email: cleanEmail,
+        role: isAdmin ? 'admin' : 'user',
+        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(cleanEmail)}`,
         createdAt: new Date().toISOString(),
       };
 
@@ -56,16 +61,26 @@ export function AuthProvider({ children }) {
       localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(authenticatedUser));
       return authenticatedUser;
     } catch (err) {
-      const fallbackUser = {
-        name: isAdmin ? 'Super Admin' : email.split('@')[0].replace('.', ' '),
-        email: email,
-        role: assignedRole,
-        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(email)}`,
-        createdAt: new Date().toISOString(),
-      };
-      setUser(fallbackUser);
-      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(fallbackUser));
-      return fallbackUser;
+      // If error is an explicit auth error message, rethrow it to prevent unauthorized login
+      if (err.message && err.message !== 'Failed to fetch') {
+        throw err;
+      }
+
+      // Offline/Fallback handler strictly for Admin demo credentials
+      if (isAdmin && password === 'admin123') {
+        const adminUser = {
+          name: 'Super Admin',
+          email: 'admin@bandhan.com',
+          role: 'admin',
+          avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=admin`,
+          createdAt: new Date().toISOString(),
+        };
+        setUser(adminUser);
+        localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(adminUser));
+        return adminUser;
+      }
+
+      throw new Error('Invalid email or password. Please check your credentials.');
     }
   };
 
@@ -77,14 +92,15 @@ export function AuthProvider({ children }) {
       throw new Error('Password must be at least 6 characters long.');
     }
 
-    const isAdmin = email.trim().toLowerCase() === 'admin@bandhan.com';
+    const cleanEmail = email.trim().toLowerCase();
+    const isAdmin = cleanEmail === 'admin@bandhan.com';
     const assignedRole = isAdmin ? 'admin' : 'user';
 
     try {
       const response = await authClient.signUp.email({
-        email,
+        email: cleanEmail,
         password,
-        name,
+        name: name.trim(),
         role: assignedRole,
       });
 
@@ -94,9 +110,9 @@ export function AuthProvider({ children }) {
 
       const newUser = response?.data?.user || {
         name: name.trim(),
-        email: email.trim().toLowerCase(),
+        email: cleanEmail,
         role: assignedRole,
-        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(email)}`,
+        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(cleanEmail)}`,
         createdAt: new Date().toISOString(),
       };
 
@@ -108,16 +124,7 @@ export function AuthProvider({ children }) {
       localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(newUser));
       return newUser;
     } catch (err) {
-      const fallbackUser = {
-        name: name.trim(),
-        email: email.trim().toLowerCase(),
-        role: assignedRole,
-        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(email)}`,
-        createdAt: new Date().toISOString(),
-      };
-      setUser(fallbackUser);
-      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(fallbackUser));
-      return fallbackUser;
+      throw err;
     }
   };
 

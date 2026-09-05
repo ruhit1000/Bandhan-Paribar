@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import CreateContent from './CreateContent';
+import { getArticles, deleteArticle } from '../../services/articleService';
 import {
   ChevronRight,
   Search,
@@ -14,53 +15,53 @@ import {
 } from 'lucide-react';
 
 export default function BlogNewsManagement() {
-  const [viewMode, setViewMode] = useState('list'); // 'list' | 'create'
+  const [viewMode, setViewMode] = useState('list'); // 'list' | 'form'
+  const [editingArticle, setEditingArticle] = useState(null);
   const [articles, setArticles] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [activeDropdownId, setActiveDropdownId] = useState(null);
   const itemsPerPage = 6;
 
-  useEffect(() => {
-    const saved = localStorage.getItem('admin_articles');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setArticles(parsed);
-          return;
-        }
-      } catch (e) {
-        console.error('Failed to parse saved articles:', e);
-      }
+  const loadArticlesData = async () => {
+    try {
+      const items = await getArticles();
+      setArticles(items);
+    } catch (err) {
+      console.error('Error loading articles:', err);
     }
+  };
 
-    fetch('/data.json')
-      .then((res) => res.json())
-      .then((data) => {
-        const items = data.articles || data.newsArticles || [];
-        setArticles(items);
-        localStorage.setItem('admin_articles', JSON.stringify(items));
-      })
-      .catch((err) => console.error('Error fetching articles:', err));
+  useEffect(() => {
+    loadArticlesData();
   }, []);
 
-  const saveArticles = (newArticles) => {
-    setArticles(newArticles);
-    localStorage.setItem('admin_articles', JSON.stringify(newArticles));
+  const handleOpenCreate = () => {
+    setEditingArticle(null);
+    setViewMode('form');
   };
 
-  const handleCreateSuccess = (newArticle) => {
-    const updated = [newArticle, ...articles];
-    saveArticles(updated);
+  const handleOpenEdit = (article) => {
+    setActiveDropdownId(null);
+    setEditingArticle(article);
+    setViewMode('form');
+  };
+
+  const handleSaveSuccess = async () => {
+    await loadArticlesData();
     setViewMode('list');
+    setEditingArticle(null);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this content item?')) {
-      const updated = articles.filter((a) => a.id !== id);
-      saveArticles(updated);
-      setActiveDropdownId(null);
+      try {
+        const updated = await deleteArticle(id);
+        setArticles(updated);
+        setActiveDropdownId(null);
+      } catch (err) {
+        console.error('Error deleting article:', err);
+      }
     }
   };
 
@@ -78,11 +79,15 @@ export default function BlogNewsManagement() {
     currentPage * itemsPerPage
   );
 
-  if (viewMode === 'create') {
+  if (viewMode === 'form') {
     return (
       <CreateContent
-        onCancel={() => setViewMode('list')}
-        onCreateSuccess={handleCreateSuccess}
+        editArticle={editingArticle}
+        onCancel={() => {
+          setViewMode('list');
+          setEditingArticle(null);
+        }}
+        onCreateSuccess={handleSaveSuccess}
       />
     );
   }
@@ -107,7 +112,7 @@ export default function BlogNewsManagement() {
           </p>
         </div>
         <button
-          onClick={() => setViewMode('create')}
+          onClick={handleOpenCreate}
           className="flex items-center gap-2 px-5 py-2.5 bg-[#0097E2] hover:bg-[#0081C4] text-white text-xs font-semibold rounded-xl shadow-sm transition-all"
         >
           <Plus className="w-4 h-4" />
@@ -201,10 +206,7 @@ export default function BlogNewsManagement() {
                       {activeDropdownId === article.id && (
                         <div className="absolute right-6 top-12 z-20 w-36 bg-white border border-gray-200 rounded-2xl shadow-xl p-1.5 text-left animate-in fade-in zoom-in-95 duration-150">
                           <button
-                            onClick={() => {
-                              setActiveDropdownId(null);
-                              setViewMode('create');
-                            }}
+                            onClick={() => handleOpenEdit(article)}
                             className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-blue-50 hover:text-[#0097E2] rounded-xl transition-colors"
                           >
                             <Edit2 className="w-3.5 h-3.5 text-[#0097E2]" />
